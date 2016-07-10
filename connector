@@ -1,0 +1,22 @@
+#! /usr/bin/env python
+# Native Messaging script to launch video player
+import struct
+import sys
+import json
+import subprocess
+try:
+    msg_lengthBI = sys.stdin.read(4)
+    if len(msg_lengthBI) == 0:
+        sys.exit(0)
+    msg_length = struct.unpack('i',msg_lengthBI)[0]
+    text = str(sys.stdin.read(msg_length).decode('utf-8'))
+    dic =  json.loads(text) 
+    player =dic["player"]
+    link = dic["link"]
+    exit_code = subprocess.call([player, link])
+
+except Exception as e:
+    text_file = open("Error.log", "w")
+    text_file.write( e.__doc__)
+    text_file.write(e.message)
+    text_file.close()

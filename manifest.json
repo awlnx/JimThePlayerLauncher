@@ -1,0 +1,32 @@
+{
+   // Extension ID: cnpfmodefcbjmcgmglgafinooknbblnb
+  "name": "JimThePlayerLauncher",
+  "version": "0.0.1",
+"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0EKStXqoz+Xama1fm8nPqoufBy7yFQjtPJTxyHCDbCYjgY0y7F7nhBNERdWyz/vFzHFPsNWYOB9sH6OsIYR6M35G8W6nWBrBnZMGtwWdl1s1TrGCJcHvIA+Km8R7X3hl1T9BcQckFC3Lw1LRdL6KfIR94bumT30Kl8EP5DrPUB3aOOyCebYyAT4Byj5JDCb8ot7tmFaOeSuIDm9VuQCx3QAx95+wh0lmjRJJUTtZrDzDHuIk/HfVoze4UHK/Ym2hOEyniCPFQ1FbW6daSi9HCt7Gv03BUQFfU2bguahrsPqzn6v175/7wWzlN+85Bt8YcxvwL2q4HDUFWROhdIRM2wIDAQAB",
+
+
+  "manifest_version": 2,
+  "description": "Launches video player of your choice to play videos in",
+  "icons": {
+  },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ],
+    "persistent": true
+  },
+  "options_page": "",
+  "browser_action": {
+    "default_icon": "icons/notplay.png",
+    "default_title": "Video Launcher"
+  },
+  "permissions": [
+    "background",
+    "webRequest",
+    "clipboardWrite",
+    "tabs",
+    "https://*/*",
+    "http://*/*",
+   "nativeMessaging"
+  ]
+}
