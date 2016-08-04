@@ -1,7 +1,7 @@
 {
 	  "name": "com.awlnx.video_connector",
 	    "description": "nm py script to send videos to videoplayer",
-	      "path": "connector.bat",
+	      "path": "#*#",
 	        "type": "stdio",
 		  "allowed_origins": [
 			      "chrome-extension://eiailhjaloljbhdjhnlfhokdfnalemah/"
