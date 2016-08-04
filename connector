@@ -5,6 +5,12 @@ import sys
 import json
 import subprocess
 try:
+    #taken from the native messaging host example 
+    #https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/api/nativeMessaging/host/native-messaging-example-host
+    if sys.platform == "win32":
+        import os, msvcrt 
+        msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
+        msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
     msg_lengthBI = sys.stdin.read(4)
     if len(msg_lengthBI) == 0:
         sys.exit(0)
