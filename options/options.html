@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Test Extension Options</title>
+  <style>
+    body: { padding: 10px; }
+  </style>
+</head>
+
+<body>
+  <h1> Set the video player </h1>
+  <p> Set the player that jim will open.<p>
+  <p> type your players full file path (as example for vlc C:\Program Files (x86)\VideoLan\VLC\vlc.exe) <br></br>
+  on mac and linux if the player is in your path environment variable just type the player name otherwise type out the full path. (open terminal, if typing the player name opens the player then just type the player name <p>
+       
+  <br></br>Player Path:
+  <input type="text" id="player_path">
+  <div id="status"></div>
+  <button id="save">Save</button>
+
+  <script src="options.js"></script>
+</body>
+</html>
+

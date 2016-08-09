@@ -50,7 +50,7 @@ MediaGrabber.prototype.startlistener = function() {
         urls: ["<all_urls>"]
     }, ["responseHeaders"]);
 };
-MediaGrabber.prototype.startgrabber = function() {
+MediaGrabber.prototype.startgrabber = function(player_path) {
 	/* Init */
     chrome.tabs.query({
         active: true,
@@ -94,7 +94,7 @@ MediaGrabber.prototype.startgrabber = function() {
                 return;
             }
             chrome.runtime.sendNativeMessage("com.awlnx.video_connector", {
-                player: 'mpv',
+                player: player_path,
                 link: Link
             });
         }.bind(this));
@@ -107,4 +107,17 @@ MediaGrabber.prototype.links = function() {
 //**start**//
 MediaEngine = new MediaGrabber();
 MediaEngine.setfilter(['video/mp4', 'video/x-flv', 'video/webm']);
-MediaEngine.startgrabber();
+
+chrome.storage.local.get({
+	Player: null
+	}, function(items) {
+		//console.log(items.Player);
+		if (items.Player === undefined) {
+			chrome.tabs.create({ 'url': 'chrome://extensions/?options=' + chrome.runtime.id });
+		}
+		else {
+			
+                    MediaEngine.startgrabber(items.Player);
+		}
+
+	});

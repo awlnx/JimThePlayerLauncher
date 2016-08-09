@@ -15,12 +15,17 @@
     ],
     "persistent": true
   },
-  "options_page": "",
+
   "browser_action": {
     "default_icon": "icons/notplay.png",
     "default_title": "Video Launcher"
   },
+  "options_ui" : {
+    "page": "options/options.html",
+    "chrome_style":true
+  },
   "permissions": [
+    "storage",
     "background",
     "webRequest",
     "clipboardWrite",
