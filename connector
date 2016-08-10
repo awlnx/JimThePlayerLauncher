@@ -4,6 +4,7 @@ import struct
 import sys
 import json
 import subprocess
+
 try:
     #taken from the native messaging host example 
     #https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/api/nativeMessaging/host/native-messaging-example-host

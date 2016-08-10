@@ -113,7 +113,7 @@ chrome.storage.local.get({
 	Player: null
 	}, function(items) {
 		//console.log(items.Player);
-		if (items.Player === undefined) {
+		if (items.Player === null) {
 			chrome.tabs.create({ 'url': 'chrome://extensions/?options=' + chrome.runtime.id });
 		}
 		else {
@@ -125,7 +125,6 @@ chrome.storage.local.get({
 	});
 
 chrome.storage.onChanged.addListener(function(changes,areaname) {
-	console.log("change");
 	chrome.storage.local.get({
 		Player:null
 	}, function(items) {

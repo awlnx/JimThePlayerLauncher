@@ -6,5 +6,5 @@
 
 
 
-REG ADD "HKCU\Software\Google\Chrome\NativeMessagingHosts\com.awlnx.video_connector.json" /ve /t REG_SZ /d "%~dp0com.awlnx.video_connector-win.json" /f
+REG ADD "HKCU\Software\Google\Chrome\NativeMessagingHosts\com.awlnx.video_connector" /ve /t REG_SZ /d "%~dp0com.awlnx.video_connector-win.json" /f
 
