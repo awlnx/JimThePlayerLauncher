@@ -1,15 +1,36 @@
-# JimThePlayerLauncher
-Chrome Extension that will launch player of your choice for your viewing pleasure (W.I.P. currently only supports MPV)
+#JimThePlayerLauncher
+
+Meet Jim. Enjoy watching video's in your favorite player like vlc or mpv?
+He's here to help. Just click on jims play button and he'll forward the link to your favorite player.
 
 
-(for now)
-Supported Players :
-MPV
+## Supported players
+Jim should support any video player that supports streaming*
 
-Supported OS:
-Linux 
-Mac(untested)
+## installation
+###### Supports chrome on windows, chrome and chromium on linux and mac
 
-#Installation
-copy the folder to it's home destination and run the install.sh script 
-Then load the extension in developer mode unpacked
+#### Windows
+1. Download or clone the directory
+2. move the file to it's home. It cannot be moved again without reinstalling
+3. click install\_host.bat
+4. go to chrome settings > extensions
+5. Check delveloper mode 
+6. click load unpacked extension and navigate to jim
+7. enjoy!
+
+
+#### Linux and Mac
+1. Download or clone the directory
+2. move the file to it's home. It cannot be moved again without reinstalling
+3. click install\_host.sh
+4. go to chrome settings > extensions                         
+5. Check delveloper mode
+6. click load unpacked extension and navigate to jim
+7. enjoy!
+ 
+
+
+
+
+###### \*only vlc,mpv, and smplayer have been tested thus far
