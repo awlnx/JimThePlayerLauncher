@@ -1,1 +1,1 @@
-python "%~dp0/connector" %*
+python "%~dp0/connector" 
