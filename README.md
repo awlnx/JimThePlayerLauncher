@@ -17,17 +17,19 @@ Jim should support any video player that supports streaming*
 4. go to chrome settings > extensions
 5. Check delveloper mode 
 6. click load unpacked extension and navigate to jim
-7. enjoy!
+7. restart chrome/chromium 
+8. enjoy
 
 
 #### Linux and Mac
 1. Download or clone the directory
 2. move the file to it's home. It cannot be moved again without reinstalling
-3. click install\_host.sh
+3. open install\_host.sh in terminal
 4. go to chrome settings > extensions                         
 5. Check delveloper mode
 6. click load unpacked extension and navigate to jim
-7. enjoy!
+7. restart chrome/chromium 
+8. enjoy
  
 
 
