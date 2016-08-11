@@ -1,1 +1,2 @@
-python "%~dp0/connector" 
+@echo off
+python "%~dp0/connector" %*
