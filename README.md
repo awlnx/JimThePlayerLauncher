@@ -9,7 +9,7 @@ Jim should support any video player that supports streaming*
 
 ## dependencies
 
-*python2.7
+### python2.7
 #### windows users can download [here](https://www.python.org/ftp/python/2.7.12/python-2.7.12.amd64.msi)
 #### mac users download can [here](https://www.python.org/ftp/python/2.7.12/python-2.7.12-macosx10.6.pkg) 
 ## installation
