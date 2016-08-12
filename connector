@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python2.7
 # Native Messaging script to launch video player
 import os
 import struct
