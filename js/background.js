@@ -82,8 +82,8 @@ MediaGrabber.prototype.startgrabber = function(items) {
         chrome.tabs.get(this.activetabid, function(tab) {
             // temporary workaround for youtube for players with youtube-dl
 	    // TODO 
-	    // *setup options page with a whitelist for special site workarounds
-            if (/.*youtube.*/.test(tab.url)) {
+	    // *setup options page with a whitelist for youtube download site workarounds
+            if (/.*youtube.*/.test(tab.url) ||/.*twitch.*/.test(tab.url) || /.*dailymotion.*/.test(tab.url)) {
                 Link = tab.url;
 
             } else {
