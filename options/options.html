@@ -1,23 +1,41 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="options.css">
   <title>My Test Extension Options</title>
   <style>
-    body: { padding: 10px; }
   </style>
 </head>
 
 <body>
-  <h1> Set the video player </h1>
-  <p> Set the player that jim will open.<p>
-  <p> type your players full file path (as example for vlc C:\Program Files (x86)\VideoLan\VLC\vlc.exe) <br></br>
-  on mac and linux if the player is in your path environment variable just type the player name otherwise type out the full path. (open terminal, if typing the player name opens the player then just type the player name <p>
-       
-  <br></br>Player Path:
-  <input type="text" id="player_path">
-  <div id="status"></div>
-  <button id="save">Save</button>
-
+	<title> JimThePlayerLauncher </title>
+  <div id=section-player_path>
+      <h1> Set the video player </h1>
+      <p> Set the player that jim will open.<p>
+      <p> type your players full file path (as example for vlc C:\Program Files (x86)\VideoLan\VLC\vlc.exe) <br></br>
+      on mac and linux if the player is in your path environment variable just type the player name otherwise type out the full path. (open terminal, if typing the player name opens the player then just type the player name <p>
+           
+      <br></br>Player Path:
+      <input type="text" id="player_path">
+  </div>
+  
+  <div id=section-bipass> 
+      <h1> Bipass </h1>
+      <p> Normally Jim will try to pull the video url out of the player
+      <p> Add domains here that you want the player to try to open directly instead.</p>
+      <p> usefull for sites like youtube that have special encoding </p> 
+      <div id=bipass-div class=table >
+	      <div  id=bipassTable class=body ></div>
+      </div>
+      <input type="text" id="bipass">
+      <button id="add-bipass" >add</button>
+  </div>
+  
+  <div id=section-save>
+      <div id="status"></div>
+      <button id="save">Save</button>
+  </div>
+  
   <script src="options.js"></script>
 </body>
 </html>

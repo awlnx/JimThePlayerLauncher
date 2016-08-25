@@ -23,12 +23,11 @@ MediaGrabber.prototype.filter = function(headers) {
         return (dict.name === 'Content-Type' || dict.name === 'content-type'); //sometimes returns undefined;
     }.bind(this));
     for (var i = 0; i < this.type.length; i++) {
-        /* bad error code to suppress undefined error; definitely should fix at somepoint.*/
+        /*Suppress Execption  when  comparing against undefined*/
         try {
-            if (this.type[i] == contenttype.value)
+            if (this.type[i] === contenttype.value)
                 return true;
         } catch (err) {
-              console.log('Content-Type not found');
 	} 
     }
     return false;
@@ -80,10 +79,22 @@ MediaGrabber.prototype.startgrabber = function(items) {
         /*OnClicked*/ 
     chrome.browserAction.onClicked.addListener(function() {
         chrome.tabs.get(this.activetabid, function(tab) {
-            // temporary workaround for youtube for players with youtube-dl
-	    // TODO 
-	    // *setup options page with a whitelist for youtube download site workarounds
-            if (/.*youtube.*/.test(tab.url) ||/.*twitch.*/.test(tab.url) || /.*dailymotion.*/.test(tab.url)) {
+		var pass = false;
+		var domains = items.Domains;
+		// O(N) speed
+		for (var i = 0; i < domains.length ; i++){
+                      var match= new RegExp('.*' + domains[i] + '.*');
+			if (match.test(tab.url)) { 
+				//domains[i].match( )) ) {
+
+					pass=true;
+					break;
+			}
+		}
+
+
+            //if (/.*youtube.*/.test(tab.url) ||/.*twitch.*/.test(tab.url) || /.*dailymotion.*/.test(tab.url)) {
+	     if (pass) {
                 Link = tab.url;
 
             } else {
@@ -110,15 +121,14 @@ MediaEngine = new MediaGrabber();
 MediaEngine.setfilter(['video/mp4', 'video/x-flv', 'video/webm']);
 
 chrome.storage.local.get({
-	Player: null
+	Player: null,
+	Domains:null
 	}, function(items) {
-		//console.log(items.Player);
-		if (items.Player === null) {
-			chrome.tabs.create({ 'url': 'chrome://extensions/?options=' + chrome.runtime.id });
+		if (items.Player === null || items.Domains === null) {
+			chrome.runtime.openOptionsPage();
 		}
 		else {
-			console.log(typeof items);
-		    player = items;
+			player = items;
                     MediaEngine.startgrabber(player);
 		}
 
@@ -126,9 +136,11 @@ chrome.storage.local.get({
 
 chrome.storage.onChanged.addListener(function(changes,areaname) {
 	chrome.storage.local.get({
-		Player:null
+		Player:null,
+		Domains:null
 	}, function(items) {
 		player.Player = items.Player ;
+		player.Domains = items.Domains;
 	});
 });
 
