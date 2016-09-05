@@ -1,5 +1,38 @@
 // Media Grabber Class //
 // code execution is on line 115 
+
+/******************************
+ PRESETUP
+*********************************/
+//add binary search to array prototype
+//
+Array.prototype.binIndexOf = function (comparison) {
+    var min = 0;
+    var max = this.length -1;
+    var index;
+
+    while(min <= max) {
+        index = Math.floor( (max + min)/2 );
+	if (this[index] == comparison) {
+		return index;
+	}
+	if (this[index] < comparison) {
+		min = index +1;
+	}
+	if (this[index] > comparison) {
+		 max = index -1;
+	}
+
+    }
+
+    return -1; 
+
+
+};
+
+/****************************************
+
+****************************************/
 function MediaGrabber() {
     this.linkshash = {};
     this.type = [];
@@ -17,21 +50,20 @@ function MediaGrabber() {
 
 MediaGrabber.prototype.setfilter = function(arr) {
     this.type = arr;
+    this.type.sort();
 };
 MediaGrabber.prototype.filter = function(headers) {
     var contenttype = headers.find(function(dict) {
         return (dict.name === 'Content-Type' || dict.name === 'content-type'); //sometimes returns undefined;
     }.bind(this));
-    for (var i = 0; i < this.type.length; i++) {
-        /*Suppress Execption  when  comparing against undefined*/
-        try {
-            if (this.type[i] === contenttype.value)
-                return true;
-        } catch (err) {
-	} 
+    if (contenttype === undefined) {
+	    return false;
+    }
+    if (this.type.binIndexOf(contenttype.value) != -1){
+	    return true;
     }
     return false;
-};
+    };
 MediaGrabber.prototype.evaliconstate = function() {
     if (this.linkshash[this.activetabid].length !== 0) {
         chrome.browserAction.setIcon({
