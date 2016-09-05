@@ -1,5 +1,6 @@
 #!/bin/bash
-HostName=com.awlnx.video_connector Platform=$(uname -s)
+HostName=com.awlnx.video_connector 
+Platform=$(uname -s)
 #NativeMessagingDirChrome
 #NativeMessagingDirChromium
 Ichrome="false"
@@ -80,8 +81,12 @@ if  [ $Ichrome = "true" ] ; then
 	echo "$DIR/$HostName.json"
 	echo "$NativeMessagingDirChrome/$HostName.json"
 	cp "$DIR/$HostName.json" "$NativeMessagingDirChrome/."
-	sed -i '' "s:#\*#:$DIR/connector:" "$NativeMessagingDirChrome/$HostName.json"
-	sed -i '' "s:\\\:\\\\\\\:g" "$NativeMessagingDirChrome/$HostName.json"
+	touch ./tmp
+	sed -e "s:#\*#:$DIR/connector:"  "$NativeMessagingDirChrome/$HostName.json" > ./tmp
+	mv ./tmp "$NativeMessagingDirChrome/$HostName.json" 
+	touch tmp
+	sed -e "s:\\\:\\\\\\\:g"  "$NativeMessagingDirChrome/$HostName.json" > ./tmp
+	mv ./tmp  "$NativeMessagingDirChrome/$HostName.json"
 	echo "installed for chrome"
 fi
 
@@ -90,8 +95,12 @@ if  [ $Ichromium = "true" ]; then
 	echo "$DIR/$HostName.json"
 	echo "$NativeMessagingDirChromium/$HostName.json"
 	echo $(cp "$DIR/$HostName.json" "$NativeMessagingDirChromium/$HostName.json")
-	sed -i '' "s:#\*#:$DIR/connector:" "$NativeMessagingDirChromium/$HostName.json"
-	sed -i '' "s:\\\:\\\\\\\:g" "$NativeMessagingDirChromium/$HostName.json"
+	touch ./tmp
+	sed -e  "s:#\*#:$DIR/connector:"  "$NativeMessagingDirChromium/$HostName.json"> ./tmp
+	mv ./tmp  "$NativeMessagingDirChromium/$HostName.json"
+	touch ./tmp
+	sed -e "s:\\\:\\\\\\\:g" "$NativeMessagingDirChromium/$HostName.json"  > ./tmp
+	mv ./tmp "$NativeMessagingDirChromium/$HostName.json"
 	echo "installed for chromium"
 fi
 
