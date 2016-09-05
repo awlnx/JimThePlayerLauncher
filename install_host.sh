@@ -80,8 +80,8 @@ if  [ $Ichrome = "true" ] ; then
 	echo "$DIR/$HostName.json"
 	echo "$NativeMessagingDirChrome/$HostName.json"
 	cp "$DIR/$HostName.json" "$NativeMessagingDirChrome/."
-	sed -i "s:#\*#:$DIR/connector:" "$NativeMessagingDirChrome/$HostName.json"
-	sed -i "s:\\\:\\\\\\\:g" "$NativeMessagingDirChrome/$HostName.json"
+	sed -i '' "s:#\*#:$DIR/connector:" "$NativeMessagingDirChrome/$HostName.json"
+	sed -i '' "s:\\\:\\\\\\\:g" "$NativeMessagingDirChrome/$HostName.json"
 	echo "installed for chrome"
 fi
 
@@ -90,8 +90,8 @@ if  [ $Ichromium = "true" ]; then
 	echo "$DIR/$HostName.json"
 	echo "$NativeMessagingDirChromium/$HostName.json"
 	echo $(cp "$DIR/$HostName.json" "$NativeMessagingDirChromium/$HostName.json")
-	sed -i "s:#\*#:$DIR/connector:" "$NativeMessagingDirChromium/$HostName.json"
-	sed -i "s:\\\:\\\\\\\:g" "$NativeMessagingDirChromium/$HostName.json"
+	sed -i '' "s:#\*#:$DIR/connector:" "$NativeMessagingDirChromium/$HostName.json"
+	sed -i '' "s:\\\:\\\\\\\:g" "$NativeMessagingDirChromium/$HostName.json"
 	echo "installed for chromium"
 fi
 
