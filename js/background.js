@@ -37,9 +37,7 @@ function MediaGrabber() {
     this.linksHash = {};
     this.type = [];
     this.activeTabId = undefined;
-    /*this.returndata = function() {
-        return this.linkhash[this.activeTabId];
-    };*/
+    this.activeStorage= {};
     this.listener = function(details) {
         if (this.filter(details.responseHeaders)) {
             if (this.linksHash[this.activeTabId].indexOf(details.url) < 0){
@@ -49,11 +47,6 @@ function MediaGrabber() {
 
         }
     };
-
-
-var player = {};
-this.setFilter(['video/mp4', 'video/x-flv', 'video/webm']);
-
 chrome.storage.local.get({
 	Player: null,
 	Domains:null
@@ -62,8 +55,8 @@ chrome.storage.local.get({
 			chrome.runtime.openOptionsPage();
 		}
 		else {
-			player = items;
-                    this.startGrabber(player);
+			this.activeStorage = items;
+                    this.startGrabber();
 		}
 
 	}.bind(this));
@@ -73,8 +66,7 @@ chrome.storage.onChanged.addListener(function(changes,areaname) {
 		Player:null,
 		Domains:null
 	}, function(items) {
-		player.Player = items.Player ;
-		player.Domains = items.Domains;
+		this.activeStorage = items ;
 	});
 });
 
@@ -124,7 +116,7 @@ MediaGrabber.prototype.startListener = function() {
         urls: ["<all_urls>"]
     }, ["responseHeaders"]);
 };
-MediaGrabber.prototype.startGrabber = function(items) {
+MediaGrabber.prototype.startGrabber = function() {
 
 	/* Init */
 	//get first tab, clear data and start listening to GET requests
@@ -164,9 +156,11 @@ MediaGrabber.prototype.startGrabber = function(items) {
 
         chrome.tabs.get(this.activeTabId, function(tab) {
 		var pass = false;
-		var domains = items.Domains; // passed into fuction from storage data
+		console.log(this.activeStorage);
+		var domains = this.activeStorage.Domains; // passed into fuction from storage data
+		console.log(domains);
 		var match;
-                var l = domains.length; // speed hack for loop 
+                var l = domains.length; 
 		for (var i = 0; i < l ; i++){
                         match = new RegExp('.*' + domains[i] + '.*');
 			if (match.test(tab.url)) { 
@@ -182,7 +176,7 @@ MediaGrabber.prototype.startGrabber = function(items) {
             }
             
 	     chrome.runtime.sendNativeMessage("com.awlnx.video_connector", {
-                player: items.Player,
+                player: this.activeStorage.Player,
                 link: Link
             });
 
@@ -199,3 +193,4 @@ MediaGrabber.prototype.links = function() {
 //**start**//
 //
 MediaEngine = new MediaGrabber();
+MediaEngine.setFilter(['video/mp4', 'video/x-flv', 'video/webm']);
