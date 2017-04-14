@@ -1,69 +1,59 @@
 body {
-	padding:10px;
-
+    padding: 10px;
 }
-
 div {
-	margin-top:10%;
-	margin-bottom:10%;
-
+    margin-top: 10%;
+    margin-bottom: 10%;
 }
-
-
 ul {
-	list-style-type: none;
-	border:2px solid black;
+    list-style-type: none;
+    border: 2px solid black;
 }
-
 li {
-	padding:1%;
+    padding: 1%;
 }
-
-#bipass-list {
+#bipass-list {} .table {
+    display: table;
+    width: 50%;
 }
-
-
-.table{
-	display:table;
-	width:50%;
-}
-
 .body {
-	display:table-row-group;
+    display: table-row-group;
 }
 .row {
-	display:table-row;
+    display: table-row;
 }
-.cell{
-        display: table-cell;
-	padding: 3px 10px;
+.cell {
+    display: table-cell;
+    padding: 3px 10px;
 }
-
-
-
-
-.btn {
-	  box-shadow:none;
-	  background:none;
-	  border:none;
-	  outline:none;
-	  margin:0;
-          padding:0;
-	  font-family: Courier New;
-	  color: #f50505;
-	  font-size: 20px;
-	  text-decoration: none;
-	  }
-
-	  .btn:hover {
-
-		    text-decoration: none;
-	    }
-        
-
-
+button.filterTable {
+    box-shadow: none;
+    background: none;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    font-family: Courier New;
+    color: #f50505;
+    font-size: 20px;
+    text-decoration: none;
+}
+div.filterTable {
+    box-shadow: none;
+    background: none;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    font-family: Courier New;
+    color: #f50505;
+    font-size: 20px;
+    text-decoration: none;
+    float: left;
+}
+.btn:hover {
+    text-decoration: none;
+}
 #section-save {
-
-	text-align:right;
-
+    text-align: right;
 }

@@ -1,42 +1,41 @@
 <DOCTYPE html>
 <html>
-<head>
-<link rel="stylesheet" type="text/css" href="options.css">
-  <title>My Test Extension Options</title>
-  <style>
-  </style>
-</head>
-
-<body>
-	<title> JimThePlayerLauncher </title>
-  <div id=section-player_path>
-      <h1> Set the video player </h1>
-      <p> Set the player that jim will open.<p>
-      <p> type your players full file path (as example for vlc C:\Program Files (x86)\VideoLan\VLC\vlc.exe) <br></br>
-      on mac and linux if the player is in your path environment variable just type the player name otherwise type out the full path. (open terminal, if typing the player name opens the player then just type the player name <p>
-           
-      <br></br>Player Path:
-      <input type="text" id="player_path">
-  </div>
-  
-  <div id=section-bipass> 
-      <h1> Bipass </h1>
-      <p> Normally Jim will try to pull the video url out of the player
-      <p> Add domains here that you want the player to try to open directly instead.</p>
-      <p> usefull for sites like youtube that have special encoding </p> 
-      <div id=bipass-div class=table >
-	      <div  id=bipassTable class=body ></div>
-      </div>
-      <input type="text" id="bipass">
-      <button id="add-bipass" >add</button>
-  </div>
-  
-  <div id=section-save>
-      <div id="status"></div>
-      <button id="save">Save</button>
-  </div>
-  
-  <script src="options.js"></script>
-</body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="options.css">
+        <title>JimThePlayerLauncher Options</title>
+        <style>
+        </style>
+    </head>
+    <body>
+        <title> JimThePlayerLauncher Options</title>
+        <div id=section-player_path>
+            <h1> Set the video player </h1>
+            <p> Set the player that jim will try to open.
+            <p>
+            <p> Jim needs to know where the player is to launch him.Type your players full file path for example on windows vlc's default path is <br></br>C:\Program Files (x86)\VideoLan\VLC\vlc.exe<br></br>
+                <br></br>Player Path:
+                <input type="text" id="player_path">
+        </div>
+        <div id=section-bipass>
+            <h1> Bipass </h1>
+            <p> Normally Jim will try to pull the video url out of the player
+            <p> Add domains here that you want the player to try to open directly instead. useful for players like mpv or vlc which have built in support for sites like youtube and twitch. These sites have special encoding Jim won't be able to open them correctly otherwise</p>
+            <div id=bipass-div class=table >
+                <div  id=bipassTable class=table></div>
+            </div>
+            <input type="text" id="bipass">
+            <button id="addBipass" >add</button>
+        </div>
+        <div id=section-filetypes>
+            <p> Please add any MIME extensions that you would like your player to open. Here are some examples are video/mp4,video/x-flv,video/webm. </p>
+            <div id=filetypeTable class=table></div>
+            <input type="text" id="files">
+            <button id="addFileTypes">add</button>
+        </div>
+        <div id=section-save>
+            <div id="status"></div>
+            <button id="save">Save</button>
+        </div>
+        <script src="options.js"></script>
+    </body>
 </html>
-

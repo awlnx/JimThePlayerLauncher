@@ -1,38 +1,5 @@
 // Media Grabber namespace//
-// code execution is on line 115 
 
-/******************************
- PRESETUP
-*********************************/
-//add binary search to array prototype
-//
-Array.prototype.binIndexOf = function (comparison) {
-    var min = 0;
-    var max = this.length -1;
-    var index;
-
-    while(min <= max) {
-        index = Math.floor( (max + min)/2 );
-	if (this[index] == comparison) {
-		return index;
-	}
-	if (this[index] < comparison) {
-		min = index +1;
-	}
-	if (this[index] > comparison) {
-		 max = index -1;
-	}
-
-    }
-
-    return -1; 
-
-
-};
-
-/****************************************
-
-****************************************/
 function MediaGrabber() {
     this.linksHash = {};
     this.type = [];
@@ -49,13 +16,15 @@ function MediaGrabber() {
     };
 chrome.storage.local.get({
 	Player: null,
-	Domains:null
+	Domains:null,
+	FileTypes:[],
 	}, function(items) {
 		if (items.Player === null || items.Domains === null) {
 			chrome.runtime.openOptionsPage();
 		}
 		else {
 			this.activeStorage = items;
+			this.setFilter(items.FileTypes);
                     this.startGrabber();
 		}
 
@@ -64,9 +33,12 @@ chrome.storage.local.get({
 chrome.storage.onChanged.addListener(function(changes,areaname) {
 	chrome.storage.local.get({
 		Player:null,
-		Domains:null
+		Domains:null,
+		FileTypes:[]
 	}, function(items) {
-		this.activeStorage = items ;
+		this.activeStorage = items;
+		this.setFilter(items.FileTypes);
+		console.log(this);
 	});
 });
 
@@ -88,13 +60,37 @@ MediaGrabber.prototype.setFilter = function(arr) {
     this.type.sort();
 };
 MediaGrabber.prototype.filter = function(headers) {
+	var binIndex = function(arr,comparison) {
+
+            var min = 0;
+            var max = arr.length -1;
+            var index;
+        
+            while(min <= max) {
+                index = Math.floor( (max + min)/2 );
+        	if (arr[index] == comparison) {
+        		return index;
+        	}
+        	if (arr[index] < comparison) {
+        		min = index +1;
+        	}
+        	if (arr[index] > comparison) {
+        		 max = index -1;
+        	}
+        
+            }
+        
+            return -1; 
+        
+        
+	};
     var contentType = headers.find(function(dict) {
         return (dict.name === 'Content-Type' || dict.name === 'content-type'); //sometimes returns undefined;
     }.bind(this));
     if (contentType === undefined) {
 	    return false;
     }
-    if (this.type.binIndexOf(contentType.value) != -1){
+    if (binIndex(this.type,contentType.value) != -1){
 	    return true;
     }
     return false;
@@ -193,4 +189,4 @@ MediaGrabber.prototype.links = function() {
 //**start**//
 //
 MediaEngine = new MediaGrabber();
-MediaEngine.setFilter(['video/mp4', 'video/x-flv', 'video/webm']);
+//MediaEngine.setFilter(['video/mp4', 'video/x-flv', 'video/webm']);

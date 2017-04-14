@@ -1,139 +1,99 @@
-//taken from default optionsv2 chrome page
-//https://developer.chrome.com/extensions/optionsV2
-
- //options namespace object
-var options = function () {
-    this.passThroughDomains= [];
-};
-
-options.prototype.saveOptions = function () {
-    var playerPath= document.getElementById('player_path').value;
-    var updateStatus =  function() {
-        var status = document.getElementById('status');
-        status.textContent = 'Options saved.';
-        setTimeout(function() {
-            status.textContent = '';
-        }, 750);
+var options = {
+    passThroughDomains: [],
+    filetypes: [],
+    PlayerPath: document.getElementById('player_path'),
+    save: function () {
+        var domains = this.passThroughDomains;
+        var fileTypes = this.filetypes;
+        var updatestatus = function () {
+            var statusArea = document.getElementById('status');
+            statusArea.textContent = 'Options saved.';
+            setTimeout(function () {
+                status.textContent = '';
+            }, 750);
         };
-    chrome.storage.local.set({
-    Player: playerPath,
-    });
-    chrome.storage.local.set({
-    Domains: this.passThroughDomains
-    }); 
-    updateStatus();
+        chrome.storage.local.set({
+            Player: this.PlayerPath.value,
+            Domains: domains,
+            FileTypes: fileTypes,
+        });
+        updatestatus();
+    },
+    restore: function () {
+        chrome.storage.local.get({
+            Player: 'mpv',
+            Domains: ['youtube', 'twitch', 'dailymotion'],
+            FileTypes: [],
+        }, function (items) {
+            this.PlayerPath.value = items.Player;
+            this.passThroughDomains = items.Domains;
+            this.filetypes = items.FileTypes;
+            var domains = new options.filterTable('bipass', 'addBipass', 'bipassTable', this.passThroughDomains);
+            var fileTypes = new options.filterTable('files', 'addFileTypes', 'filetypeTable', this.filetypes);
+
+            document.getElementById('addBipass').addEventListener('click', function () {
+                this.passThroughDomains = domains.getFilters();
+            }.bind(this));
+        }.bind(this));
+
+
+    },
+    filterTable: function (textboxStr, buttonStr, divStr, defaultValues) {
+        this.textbox = document.getElementById(textboxStr);
+        this.button = document.getElementById(buttonStr);
+        this.div = document.getElementById(divStr);
+        this.filters = defaultValues;
+        this.getFilters = function () {
+            return this.filters;
+        };
+        this.makeTable = function () {
+            this.filters.forEach(function (element) {
+                var row = document.createElement('div');
+                var text = document.createElement('div');
+                var buttonDiv = document.createElement('div');
+                row.setAttribute('class', 'row');
+                text.setAttribute('class', 'cell');
+                buttonDiv.setAttribute('class', 'cell');
+                buttonDiv.className = 'filterTable';
+                buttonDiv.appendChild(document.createElement('button'));
+                var button = buttonDiv.firstChild;
+                button.className = 'filterTable';
+                buttonDiv.firstChild.appendChild(document.createTextNode("x"));
+                text.appendChild(document.createTextNode(element));
+                button.addEventListener('click', function () {
+                    var parentofRow = button.parentNode.parentNode;
+                    var row = button.parentNode;
+                    this.filters.splice(this.filters.indexOf(row.firstChild), 1);
+                    parentofRow.removeChild(row);
+                }.bind(this));
+
+                row.appendChild(text);
+                row.appendChild(button);
+                this.div.appendChild(row);
+            }, this);
+        };
+        if (this.filters.length !== 0) {
+            this.makeTable();
+        }
+        this.button.addEventListener('click', function () {
+            if (/\S/.test(this.textbox.value) && this.textbox.value.length !== 0) {
+                this.filters.push(this.textbox.value);
+                this.textbox.value = '';
+                this.filters.sort();
+                while (this.div.firstChild) {
+                    this.div.removeChild(this.div.firstChild);
+                }
+                this.makeTable();
+
+            }
+        }.bind(this));
+
+    },
+
+
 };
-
-
-options.prototype.restoreOptions = function ()  {
-    chrome.storage.local.get({
-    Player: 'mpv'
-    }, function(items) {
-            document.getElementById('player_path').value = items.Player;
-    });
-
-    chrome.storage.local.get({
-    Domains: null 
-    },function(items) {
-          if (items.Domains=== null) {
-              items.Domains = ['youtube','twitch','dailymotion'];
-     }
-     this.passThroughDomains = items.Domains;
-
-     this.renderBipass();
-    }.bind(this));
-};
-
-options.prototype.removeDocElement = function (elm){
-    row = elm.parentNode;
-    while(row.firstChild) {
-    	row.removeChild(row.firstChild);
-    }
-    this.removeDomainFromArray(row.id);
-};
-
-
-
-options.prototype.removeDomainFromArray = function (elmId) {
-	var n = parseInt(elmId.match(/\d/).join(),10 );
-	this.passThroughDomains.splice(n,1);
-	this.renderBipass();
-};
-
-
-options.prototype.addBipass = function (){
-//bipass-textbox
-    var bipass = document.getElementById('bipass');
-    if (/\S/.test(bipass.value) && bipass.value.length !== 0) {
-    	this.passThroughDomains.push(bipass.value);
-    	bipass.value = '';
-    	this.renderBipass();
-    }
-};
-
-options.prototype.renderBipass = function()  {
-    //clean house
-    var domainTable = document.getElementById('bipassTable');
-    while (domainTable.firstChild) {
-        domainTable.removeChild(domainTable.firstChild);
-    }
-    this.passThroughDomains.sort();
-    
-    //render
-    
-    for(var i=0; i < this.passThroughDomains.length;i++) {
-    var row = document.createElement('div');
-    row.setAttribute('id','bipassrow' + i );
-    row.setAttribute('class','row');
-    var cell = document.createElement('div');
-    cell.setAttribute('id','bipassCell' + i);
-    cell.setAttribute('class','cell');
-    
-    var button = document.createElement('div');
-    button.setAttribute('id', 'buttoncell' + i);
-    button.setAttribute('class','cell');
-    var me = this;
-    button.addEventListener('click', function() {
-    	
-    	me.removeDocElement(this);
-    
-    
-    
-    });
-    button.appendChild(document.createElement('button'));
-    button.firstChild.appendChild(document.createTextNode("x"));
-    button.firstChild.setAttribute('class','btn');
-    
-    cell.appendChild(document.createTextNode(this.passThroughDomains[i]));
-        row.appendChild(cell);
-        row.appendChild(button);	
-    domainTable.appendChild(row);
-    
-    
-    }
-    
-    
-    
-};
-var opts = new  options();
-
-
-    document.addEventListener('DOMContentLoaded',opts.restoreOptions.bind(opts));
-    document.getElementById('save').addEventListener('click',opts.saveOptions.bind(opts));
-    document.getElementById('add-bipass').addEventListener('click',opts.addBipass.bind(opts));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// event attach
+document.addEventListener('DOMContentLoaded', options.restore());
+document.getElementById('save').addEventListener('click', function () {
+    options.save();
+});
