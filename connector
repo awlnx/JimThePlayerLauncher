@@ -8,25 +8,28 @@ import subprocess
 try:
     #taken from the native messaging host example 
     #https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/api/nativeMessaging/host/native-messaging-example-host
+
+    #put windows stdin/stdout in binary mode
     if sys.platform == "win32":
         import os, msvcrt 
         msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
         msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
-    msg_lengthBI = sys.stdin.read(4)
-    if len(msg_lengthBI) == 0:
+
+    binaryLength = sys.stdin.read(4)
+    if len(binaryLength) == 0:
         sys.exit(0)
-    msg_length = struct.unpack('i',msg_lengthBI)[0]
-    text = str(sys.stdin.read(msg_length).decode('utf-8'))
-    dic =  json.loads(text) 
-    player =dic["player"]
-    link = dic["link"]
-    null = open(os.devnull, 'w')
-    sys.stdout = null 
-    subprocess.check_call([player, link],stdout=null)
+
+    msgLength = struct.unpack('i',binaryLength)[0]
+    text = str(sys.stdin.read(msgLength).decode('utf-8'))
+    dic =  json.loads(text)
+    arguements = dic["player"].split(",")
+    arguements.append(dic["link"])
+    subprocess.check_call(arguements)
     sys.exit(0)
 
 except Exception as e:
     text_file = open("Error.log", "w")
+    text_file.write('\nError on line {}'.format(sys.exc_info()[-1].tb_lineno))
     text_file.write( e.__doc__)
     text_file.write(e.message)
     text_file.close()
